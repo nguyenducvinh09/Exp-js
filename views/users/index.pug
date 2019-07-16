@@ -1,0 +1,28 @@
+extends ../layouts/common
+block content
+    h3 Users List :
+    .d-flex.align-items-center
+        a.btn.btn-info.mr-auto(href='/users/create') New
+        form.d-flex(action='/users/search' method='GET')
+            input(type="text" name='q' value=paramValue class='form-control')
+            button.btn.btn-primary.ml-2 Search
+    table.table
+        thead
+            tr
+                th #
+                th Avatar
+                th Name
+                th Phone
+                th.text-center Actions
+        tbody
+            each user in users
+                tr
+                    td=users.indexOf(user) + 1
+                    td
+                        img.rounded(src=user.avatar, alt="", width='32')
+                    td= user.name
+                    td= user.phone
+                    td.text-center
+                        a.btn.mr-2.btn-info(href='/users/' + user.id) View
+                        a(href='/users/delete/' + user.id, class='mr-2 btn btn-danger') Delete
+                        a(href='#' + user.id, class='btn btn-warning') Edit

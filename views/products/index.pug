@@ -1,0 +1,48 @@
+extends ../layouts/common
+block content
+    h3 Products :
+    .row
+        each product in products
+            .card.mr-2.mb-4(style='width: 17rem;')
+                  img.card-img-top(src=product.image, alt='...')
+                  .card-body
+                    h5.card-title=product.name
+                    p.card-text= product.description
+                    a.btn.btn-primary(href='/cart/add/' + product.id) Add to cart
+
+    nav(aria-label='Page navigation example')
+      ul.pagination.justify-content-center
+        li.page-item
+                a.page-link(href='?page=1') First
+        if page <=1
+            li.page-item.disabled
+                a.page-link(href='?page=' + --page, tabindex='-1', aria-disabled='true') &laquo
+        else
+            li.page-item  
+                a.page-link(href='?page=' + --page, tabindex='-1', aria-disabled='true') &laquo
+        - var x = 1 
+        if currentPage > 5
+            - x = x + (currentPage -4 )
+        if x!==1
+            li.page-item.disabled
+                a.page-link(href='#') ...
+        - for (x; x <= pageTotal; x++)
+            if x == currentPage
+                li.page-item.active
+                    a.page-link(href='?page='+ currentPage)= currentPage
+            else
+                li.page-item
+                    a.page-link(href='?page=' + x)= x
+            if x - currentPage == 4
+                li.page-item.disabled
+                    a.page-link(href='#') ...
+                    - break
+        if page >= 12
+            li.page-item.disabled
+                a.page-link(href='?page=' + next) &raquo
+        else
+            li.page-item
+                a.page-link(href='?page=' + next) &raquo
+        li.page-item
+                a.page-link(href='?page=' + lastPage) Last
+
